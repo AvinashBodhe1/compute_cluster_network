@@ -1,0 +1,59 @@
+title: "Cluster Network Creation"
+description: "Cluster Network Creation in OCI"
+schemaVersion: 1.1.0
+locale: "en"
+variableGroups:
+  - title: "OCI(Oracle Cloud Infrastructure) details"
+    variables:
+      - region
+      - compartment_ocid
+      - instance_configuration_id
+      - cluster_network_instance_pools_size
+      - cluster_network_placement_configuration_availability_domain 
+      - subnet_id
+      - cluster_network_display_name
+variables:
+  region:
+    type: oci:identity:region:name
+    required: true
+    description: "Select the OCI region for dedicated VM host creation"
+    title: "Region"
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    description: "Select the OCI compartment within your tenancy"
+    title: "Compartment"
+  instance_configuration_id:
+    type: string
+    required: true
+    description: "Enter OCID for instance configuration ID"
+    title: Instance Configuration ID
+    minLength: 1
+    maxLength: 255
+    pattern: "^[a-z][a-zA-Z0-9]+$"
+  cluster_network_instance_pools_size:
+    type: integer
+    required: true
+    title: Instance Pool Size
+    description: "The number of instances that should be in the instance pool."
+  cluster_network_display_name:
+    type: string
+    minLength: 1
+    maxLength: 255
+    pattern: "^[a-z][a-zA-Z0-9]+$"
+    title: Cluster Network Display name
+    description: "Cluster network display name"
+    required: true
+  cluster_network_placement_configuration_availability_domain:
+    type: oci:identity:availabilitydomain:name
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+    visible: complexExpression
+  subnet_id:
+    type: string
+    required: true
+    description: "Enter OCID for the Primary subnet ID"
+    title: Primary subnet ID
+    minLength: 1
+    maxLength: 255
+    pattern: "^[a-z][a-zA-Z0-9]+$"
